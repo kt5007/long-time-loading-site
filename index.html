@@ -4,15 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>6分かけて画像ロード</title>
-</head>
-<body>
-    <h1>遅延画像ロードテスト</h1>
-    <p>6分（360秒）かけて画像を順番にロードします...</p>
-
-    <div id="image-container">
-        <p>画像のロード中...</p>
-    </div>
-
     <script>
         function simulateSlowLoading() {
             const container = document.getElementById("image-container");
@@ -36,7 +27,15 @@
         document.body.style.height = "100000px";
         
         // 2秒後に画像のロード開始
-        setTimeout(simulateSlowLoading, 200);
+        setTimeout(simulateSlowLoading, 2000);
     </script>
+</head>
+<body>
+    <h1>遅延画像ロードテスト</h1>
+    <p>6分（360秒）かけて画像を順番にロードします...</p>
+
+    <div id="image-container">
+        <p>画像のロード中...</p>
+    </div>
 </body>
 </html>
