@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6分遅延サイト</title>
+    <script>
+        // ページ読み込み時に6分待機する関数
+        function delayLoad() {
+            return new Promise(resolve => setTimeout(resolve, 360000)); // 360000ミリ秒 = 6分
+        }
+
+        // ページが読み込まれたら6分待機してからメッセージを表示
+        window.onload = async function() {
+            await delayLoad();
+            document.getElementById('message').innerText = 'ページの読み込みが完了しました。';
+        }
+    </script>
+</head>
+<body>
+    <h1>6分遅延サイト</h1>
+    <p id="message">ページを読み込んでいます...</p>
+</body>
+</html>
