@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -8,20 +8,68 @@
 <body>
     <h1>ネットワークリソース読み込み遅延ページ</h1>
     <p>大きなリソースを読み込んでいます...</p>
-    <!-- 同じ画像を大量に読み込む -->
+
     <div style="display:none;">
-        <!-- 画像を大量に読み込む -->
         <script>
-            const imageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg";
-            const imageCount = 1000; // 読み込む画像の数
+            // 読み込む画像のURLリスト
+            const imageUrls = [
+                "https://upload.wikimedia.org/wikipedia/commons/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/7/72/Tokyo_Tower_and_around_Skyscrapers_2014_%28cropped%29.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png"
+            ];
+
+            const imageCount = 10000; // 読み込む画像の数
+            const loadImages = [];
+
             for (let i = 0; i < imageCount; i++) {
-                const img = document.createElement('img');
-                img.src = imageUrl;
+                const img = new Image();
+                img.src = imageUrls[i % imageUrls.length]; // 複数の画像を順番に割り当てる
                 img.width = 1;
                 img.height = 1;
                 document.body.appendChild(img);
+                
+                // 画像のロードをPromiseにする
+                const promise = new Promise((resolve, reject) => {
+                    img.onload = resolve;
+                    img.onerror = reject;
+                });
+                loadImages.push(promise);
             }
+
+            // すべての画像の読み込みを待つ（オプション）
+            Promise.all(loadImages).then(() => {
+                console.log("すべての画像を読み込みました！");
+            }).catch(() => {
+                console.log("一部の画像が読み込めませんでした。");
+            });
         </script>
     </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ネットワークリクエスト遅延</title>
+</head>
+<body>
+    <h1>ネットワークリクエスト遅延</h1>
+    <p>無限にリクエストを送信中...</p>
+
+    <script>
+        function makeSlowRequest() {
+            fetch("https://upload.wikimedia.org/wikipedia/commons/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg") // 10秒遅延
+                .then(response => response.json())
+                .then(data => console.log("リクエスト完了", data))
+                .catch(err => console.error("エラー", err));
+            
+            setTimeout(makeSlowRequest, 500); // 500msごとにリクエスト
+        }
+
+        setTimeout(makeSlowRequest, 2000000); // 2秒後に開始
+    </script>
 </body>
 </html>
