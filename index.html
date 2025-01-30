@@ -8,12 +8,20 @@
 <body>
     <h1>ネットワークリソース読み込み遅延ページ</h1>
     <p>大きなリソースを読み込んでいます...</p>
-    <!-- 非常に大きな画像を読み込む -->
-    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg" alt="Large Image" width="1" height="1" style="display:none;">
-    <!-- 非常に大きな動画を読み込む -->
-    <video width="1" height="1" style="display:none;" controls>
-        <source src="https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    <!-- 同じ画像を大量に読み込む -->
+    <div style="display:none;">
+        <!-- 画像を大量に読み込む -->
+        <script>
+            const imageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg";
+            const imageCount = 1000; // 読み込む画像の数
+            for (let i = 0; i < imageCount; i++) {
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.width = 1;
+                img.height = 1;
+                document.body.appendChild(img);
+            }
+        </script>
+    </div>
 </body>
 </html>
