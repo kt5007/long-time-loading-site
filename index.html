@@ -3,22 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>6分遅延サイト</title>
+    <title>6分スクロールページ</title>
+    <style>
+        /* ページを非常に長くするためのスタイル */
+        body {
+            height: 2000000px; /* 200万ピクセルの高さに設定 */
+            background: linear-gradient(to bottom, #ffffff, #000000);
+        }
+    </style>
     <script>
-        // ページ読み込み時に6分待機する関数
-        function delayLoad() {
-            return new Promise(resolve => setTimeout(resolve, 360000)); // 360000ミリ秒 = 6分
+        // ページ読み込み時に6分かけてスクロールする関数
+        function slowScroll() {
+            return new Promise(resolve => {
+                let totalHeight = 0;
+                const distance = 100; // 100ピクセルずつスクロール
+                const interval = 1080; // 1080ミリ秒ごとにスクロール（約6分で完了）
+
+                const timer = setInterval(() => {
+                    window.scrollBy(0, distance);
+                    totalHeight += distance;
+
+                    if (totalHeight >= document.body.scrollHeight) {
+                        clearInterval(timer);
+                        resolve();
+                    }
+                }, interval);
+            });
         }
 
-        // ページが読み込まれたら6分待機してからメッセージを表示
+        // ページが読み込まれたら6分かけてスクロール
         window.onload = async function() {
-            await delayLoad();
-            document.getElementById('message').innerText = 'ページの読み込みが完了しました。';
+            await slowScroll();
+            document.getElementById('message').innerText = 'スクロールが完了しました。';
         }
     </script>
 </head>
 <body>
-    <h1>6分遅延サイト</h1>
-    <p id="message">ページを読み込んでいます...</p>
+    <h1>6分スクロールページ</h1>
+    <p id="message">スクロール中...</p>
 </body>
 </html>
